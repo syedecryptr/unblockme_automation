@@ -188,8 +188,9 @@ def api_id():
     # print(type(block))
     # print(type(array))ç
     # print(block_number, array, block)
-    print(solutionFinder(block_number, array, block, queue, allBoards, parent))
-    return (jsonify(solutionFinder(block_number, array, block, queue, allBoards, parent)))
+    res = solutionFinder(block_number, array, block, queue, allBoards, parent)
+    print(jsonify(res))
+    return (jsonify(res))
     
 
 if __name__ == '__main__':

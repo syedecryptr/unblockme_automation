@@ -137,8 +137,8 @@ if __name__ == '__main__':
 	time.sleep(2)
 	# to be used later
 	# # part of the screen
-	img = pyautogui.screenshot(region=(524,304, 390, 390)) # X1,Y1,X2,Y2
-	img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+	# img = pyautogui.screenshot(region=(524,304, 390, 390)) # X1,Y1,X2,Y2
+	# img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 	# cv2.imshow("tttt", img)
 	# cv2.waitKey(0)
 	# im.show()
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
 	kernel = np.ones((5,5),np.uint8)
 
-	# img=cv2.imread('sample2.png')
+	img=cv2.imread('sample2.png')
 
 	threshold_boxes = boxes_thresholding(img, 0, 124, 226)
 
@@ -172,7 +172,7 @@ if __name__ == '__main__':
 			block_number +=1;
 	print(np.array2string(a))
 	result = callServer(block_number, a.tolist(), str(blocks))
-	
+	print(result)
 	# for var in range(len(result)):
 	# 	print(np.asarray(result[var]))
 	# print(a)
