@@ -127,7 +127,7 @@ def callServer(block_number, array, block):
         'array': array,
         'block': block
     }
-    url = 'http://localhost:5000/api/v1/solutionFinder'
+    url = 'https://unblockme872.herokuapp.com/api/v1/solutionFinder'
     response = requests.post(url, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
@@ -137,8 +137,8 @@ if __name__ == '__main__':
 	time.sleep(2)
 	# to be used later
 	# # part of the screen
-	# img = pyautogui.screenshot(region=(524,304, 390, 390)) # X1,Y1,X2,Y2
-	# img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+	img = pyautogui.screenshot(region=(524,304, 390, 390)) # X1,Y1,X2,Y2
+	img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 	# cv2.imshow("tttt", img)
 	# cv2.waitKey(0)
 	# im.show()
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
 	kernel = np.ones((5,5),np.uint8)
 
-	img=cv2.imread('sample.png')
+	# img=cv2.imread('sample2.png')
 
 	threshold_boxes = boxes_thresholding(img, 0, 124, 226)
 
@@ -182,7 +182,7 @@ if __name__ == '__main__':
 		x = x+524
 		y = y+307
 		pyautogui.moveTo(x+20, y+20)
-		time.sleep(2)
+		time.sleep(1)
 
 		if(dire == "l"):
 			pyautogui.dragTo(x-400, y, button='left') 
