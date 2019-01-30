@@ -127,7 +127,7 @@ def callServer(block_number, array, block):
         'array': array,
         'block': block
     }
-    url = 'http://127.0.0.1:5000/api/v1/solutionFinder'
+    url = 'http://localhost:5000/api/v1/solutionFinder'
     response = requests.post(url, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
@@ -137,8 +137,7 @@ if __name__ == '__main__':
 	time.sleep(2)
 	# to be used later
 	# # part of the screen
-	# img = ImageGrab.grab(bbox=(524, 304, 914, 695)) # X1,Y1,X2,Y2
-	# img = pyautogui.screenshot(region=(524,304, 390, 390	)) # X1,Y1,X2,Y2
+	# img = pyautogui.screenshot(region=(524,304, 390, 390)) # X1,Y1,X2,Y2
 	# img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 	# cv2.imshow("tttt", img)
 	# cv2.waitKey(0)
@@ -180,16 +179,16 @@ if __name__ == '__main__':
 	for var in range(len(result)-1):
 		num, dire, x, y = whichNumberMovedWhere(result[var], result[var+1])
 		print (num, dire)
-		# x = x+524
-		# y = y+307
-		# pyautogui.moveTo(x+20, y+20)
-		# time.sleep(2)
+		x = x+524
+		y = y+307
+		pyautogui.moveTo(x+20, y+20)
+		time.sleep(2)
 
-		# if(dire == "l"):
-		# 	pyautogui.dragTo(x-400, y, button='left') 
-		# if(dire == "r"):
-		# 	pyautogui.dragTo(x+400, y, button='left') 
-		# if(dire == "u"):
-		# 	pyautogui.dragTo(x, y-400, button='left') 
-		# if(dire == "d"):
-		# 	pyautogui.dragTo(x, y+400, button='left') 
+		if(dire == "l"):
+			pyautogui.dragTo(x-400, y, button='left') 
+		if(dire == "r"):
+			pyautogui.dragTo(x+400, y, button='left') 
+		if(dire == "u"):
+			pyautogui.dragTo(x, y-400, button='left') 
+		if(dire == "d"):
+			pyautogui.dragTo(x, y+400, button='left') 

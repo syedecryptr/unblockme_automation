@@ -6,9 +6,6 @@ import os
 
 app = flask.Flask(__name__)
 
-allBoards = [];
-parent = {}
-queue = [];
 
 
 def arrayToBlock(arr, num, blocks):
@@ -21,14 +18,14 @@ def arrayToBlock(arr, num, blocks):
                 if(arr[var][var2] == key+1 and not key+1 in res):
                     res[key+1] = [[var, var2], blocks[key+1][1], blocks[key+1][2],blocks[key+1][3]]
 
-def backtrace(start, end):
+def backtrace(start, end, parent):
     path = [end]
     while path[-1] != start:
         path.append(parent[path[-1]])
     path.reverse()
     return path
 
-def alreadyExists(board):
+def alreadyExists(board, allBoards):
     for var in range(len(allBoards)):
         if (np.array_equal(board, allBoards[var])):
             return True;
@@ -153,7 +150,7 @@ def allPossibleMoves(number, block, arr):
                 allPossibilities.append(b)
     return np.array(allPossibilities)
 
-def solutionFinder(block_number, a, blocks):
+def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
     for var in range(block_number-1):
         queue.append([var+1,blocks,a])
     allBoards.append(a)
@@ -165,19 +162,23 @@ def solutionFinder(block_number, a, blocks):
 
         for var in range(len(ar)):
 
-            if(not alreadyExists(ar[var])):
+            if(not alreadyExists(ar[var], allBoards)):
                 tempArrayBlock = arrayToBlock(ar[var], block_number-1, blocks)
 
                 allBoards.append(ar[var])
                 parent[np.array2string(ar[var])] = np.array2string(tempNumber[2]);
                 #end condition
                 if(ar[var][2][4] !=0 and ar[var][2][5]!=0 and ar[var][2][5] == ar[var][2][4]):
-                    return backtrace(np.array2string(a), np.array2string(ar[var])) 
+                    return backtrace(np.array2string(a), np.array2string(ar[var]), parent) 
                 for subvar in range(block_number-1):
                     queue.append([subvar+1, tempArrayBlock, ar[var]])
 
 @app.route('/api/v1/solutionFinder', methods=['POST'])
 def api_id():
+    allBoards = [];
+    parent = {}
+    queue = [];
+
     req_data = request.get_json()
 
     block_number = req_data['block_number']
@@ -187,10 +188,10 @@ def api_id():
     # print(type(block))
     # print(type(array))ç
     # print(block_number, array, block)
-    print(solutionFinder(block_number, array, block))
-    return (jsonify(solutionFinder(block_number, array, block)))
+    print(solutionFinder(block_number, array, block, queue, allBoards, parent))
+    return (jsonify(solutionFinder(block_number, array, block, queue, allBoards, parent)))
     
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
