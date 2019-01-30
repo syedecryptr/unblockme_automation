@@ -127,7 +127,7 @@ def callServer(block_number, array, block):
         'array': array,
         'block': block
     }
-    url = 'http://127.0.0.1:5000/api/v1/solutionFinder'
+    url = 'https://unblockme872.herokuapp.com/api/v1/solutionFinder'
     response = requests.post(url, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
