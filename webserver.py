@@ -2,7 +2,7 @@ import flask
 from flask import request, jsonify
 import numpy as np
 import ast
-
+import os
 
 app = flask.Flask(__name__)
 port = int(os.environ.get('PORT', 5000))
