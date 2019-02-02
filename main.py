@@ -138,6 +138,7 @@ def callServer(block_number, array, block):
 def getStatus():
     url = 'https://unblockme872.herokuapp.com/api/v1/status'
     response = requests.get(url)
+    print(response.text)
     response.raise_for_status()
     print(response.json())
     return response.json()
