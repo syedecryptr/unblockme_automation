@@ -27,7 +27,7 @@ def arrayToBlock(arr, num):
 def whichNumberMovedWhere(b1, b2):
 	b1=re.sub('\[ +', '[', b1.strip())
 	b1=re.sub('[,\s]+', ', ', b1)
-	print(b1)
+	# print(b1)
 	b1 = np.array(ast.literal_eval(b1))
 	b2=re.sub('\[ +', '[', b2.strip())
 	b2=re.sub('[,\s]+', ', ', b2)
@@ -138,9 +138,10 @@ def callServer(block_number, array, block):
 def getStatus():
     url = 'https://unblockme872.herokuapp.com/api/v1/status'
     response = requests.get(url)
-    print(response.text)
+    # print(response.text)
+    print(".")
     response.raise_for_status()
-    print(response.json())
+    # print(response.json())
     return response.json()
 
 if __name__ == '__main__':
@@ -180,30 +181,30 @@ if __name__ == '__main__':
 			# cv2.waitKey(0)
 			mapper(rect, block_number)
 			block_number +=1;
-	print(np.array2string(a))
+	# print(np.array2string(a))
 	callServer(block_number, a.tolist(), str(blocks))
 	result = getStatus()
 	while(result == "{'status':'false'}"):
-		print(result)
+		# print(result)
 		result = getStatus()
-		time.sleep(1)
+		time.sleep(10)
 	# for var in range(len(result)):
 	# 	print(np.asarray(result[var]))
 	# print(a)
 	
 	for var in range(len(result)-1):
 		num, dire, x, y = whichNumberMovedWhere(result[var], result[var+1])
-		print (num, dire)
-		x = x+524
-		y = y+327
+		# print (num, dire)
+		x = x+534
+		y = y+337
 		pyautogui.moveTo(x+20, y+20)
 		time.sleep(1)
 
 		if(dire == "l"):
-			pyautogui.dragTo(x-400, y, button='left') 
+			pyautogui.dragTo(x-400, y+20, button='left') 
 		if(dire == "r"):
-			pyautogui.dragTo(x+400, y, button='left') 
+			pyautogui.dragTo(x+400, y+20, button='left') 
 		if(dire == "u"):
-			pyautogui.dragTo(x, y-400, button='left') 
+			pyautogui.dragTo(x+20, y-400, button='left') 
 		if(dire == "d"):
-			pyautogui.dragTo(x, y+400, button='left') 
+			pyautogui.dragTo(x+20, y+400, button='left') 

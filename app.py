@@ -156,7 +156,7 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
     allBoards.append(a)
     while(len(queue)!=0):
 
-        tempNumber = queue.pop(0);
+        tempNumber = queue.pop();
         # print (tempNumber[1][tempNumber[0]])
         ar = allPossibleMoves(tempNumber[0], tempNumber[1][tempNumber[0]], tempNumber[2]);
 
