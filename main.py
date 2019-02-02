@@ -194,7 +194,7 @@ if __name__ == '__main__':
 	
 	for var in range(len(result)-1):
 		num, dire, x, y = whichNumberMovedWhere(result[var], result[var+1])
-		# print (num, dire)
+		print (num, dire)
 		x = x+534
 		y = y+337
 		pyautogui.moveTo(x+20, y+20)
