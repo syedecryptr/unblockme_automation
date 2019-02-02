@@ -157,7 +157,7 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
     while(len(queue)!=0):
 
         tempNumber = queue.pop(0);
-        print (tempNumber[1][tempNumber[0]])
+        # print (tempNumber[1][tempNumber[0]])
         ar = allPossibleMoves(tempNumber[0], tempNumber[1][tempNumber[0]], tempNumber[2]);
 
         for var in range(len(ar)):
@@ -185,7 +185,7 @@ def sendSolution():
     content = f.read()
     f.close()
 
-    print (content)
+    # print (content)
     return content
 
 
