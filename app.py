@@ -168,9 +168,6 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
                 allBoards.append(ar[var])
                 parent[np.array2string(ar[var])] = np.array2string(tempNumber[2]);
                 #end condition
-                f = open("data", "w+")
-                json.dump("{'status':'false'}", f)
-                f.close()
                 if(ar[var][2][4] !=0 and ar[var][2][5]!=0 and ar[var][2][5] == ar[var][2][4]):
                     f = open("data", "w+")
                     return_val = backtrace(np.array2string(a), np.array2string(ar[var]), parent) 
