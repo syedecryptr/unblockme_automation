@@ -3,9 +3,9 @@ from flask import request, jsonify
 import numpy as np
 import ast
 import os
-
+import json
+import threading
 app = flask.Flask(__name__)
-
 
 
 def arrayToBlock(arr, num, blocks):
@@ -157,7 +157,7 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
     while(len(queue)!=0):
 
         tempNumber = queue.pop(0);
-        # print (tempNumber)
+        print (tempNumber[1][tempNumber[0]])
         ar = allPossibleMoves(tempNumber[0], tempNumber[1][tempNumber[0]], tempNumber[2]);
 
         for var in range(len(ar)):
@@ -168,17 +168,36 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
                 allBoards.append(ar[var])
                 parent[np.array2string(ar[var])] = np.array2string(tempNumber[2]);
                 #end condition
+                f = open("data", "w+")
+                json.dump("{'status':'false'}", f)
+                f.close()
                 if(ar[var][2][4] !=0 and ar[var][2][5]!=0 and ar[var][2][5] == ar[var][2][4]):
-                    return backtrace(np.array2string(a), np.array2string(ar[var]), parent) 
+                    f = open("data", "w+")
+                    return_val = backtrace(np.array2string(a), np.array2string(ar[var]), parent) 
+                    print(return_val)
+                    json.dump(return_val, f)
+                    f.close()
+                    return 
                 for subvar in range(block_number-1):
                     queue.append([subvar+1, tempArrayBlock, ar[var]])
+
+
+@app.route('/api/v1/status', methods=['GET'])
+def sendSolution():
+    f = open("data", "r")
+    content = f.read()
+    # print (content)
+    return content
+
 
 @app.route('/api/v1/solutionFinder', methods=['POST'])
 def api_id():
     allBoards = [];
     parent = {}
     queue = [];
-
+    f= open("data","w+")
+    json.dump("{'status':'false'}", f)
+    f.close()
     req_data = request.get_json()
 
     block_number = req_data['block_number']
@@ -188,9 +207,11 @@ def api_id():
     # print(type(block))
     # print(type(array))ç
     # print(block_number, array, block)
-    res = solutionFinder(block_number, array, block, queue, allBoards, parent)
-    print(jsonify(res))
-    return (jsonify(res))
+    my_thread = threading.Thread(target=solutionFinder, args=(block_number, array, block, queue, allBoards, parent))
+    my_thread.start()
+    # solutionFinder(block_number, array, block, queue, allBoards, parent)
+    # print(jsonify(res))
+    return ("started")
     
 
 if __name__ == '__main__':

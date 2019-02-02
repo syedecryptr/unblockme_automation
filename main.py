@@ -27,6 +27,7 @@ def arrayToBlock(arr, num):
 def whichNumberMovedWhere(b1, b2):
 	b1=re.sub('\[ +', '[', b1.strip())
 	b1=re.sub('[,\s]+', ', ', b1)
+	print(b1)
 	b1 = np.array(ast.literal_eval(b1))
 	b2=re.sub('\[ +', '[', b2.strip())
 	b2=re.sub('[,\s]+', ', ', b2)
@@ -127,11 +128,19 @@ def callServer(block_number, array, block):
         'array': array,
         'block': block
     }
-    url = 'https://unblockme872.herokuapp.com/api/v1/solutionFinder'
+    url = 'http://localhost:5000/api/v1/solutionFinder'
     response = requests.post(url, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
-    return response.json() 
+    print(response.text)
+    return response.text
+
+def getStatus():
+    url = 'http://localhost:5000/api/v1/status'
+    response = requests.get(url)
+    response.raise_for_status()
+    print(response.json())
+    return response.json()
 
 if __name__ == '__main__':
 	time.sleep(2)
@@ -171,11 +180,16 @@ if __name__ == '__main__':
 			mapper(rect, block_number)
 			block_number +=1;
 	print(np.array2string(a))
-	result = callServer(block_number, a.tolist(), str(blocks))
+	callServer(block_number, a.tolist(), str(blocks))
+	result = getStatus()
+	while(result == "{'status':'false'}"):
+		result = getStatus()
+		time.sleep(0.1)
 	print(result)
 	# for var in range(len(result)):
 	# 	print(np.asarray(result[var]))
 	# print(a)
+	
 	for var in range(len(result)-1):
 		num, dire, x, y = whichNumberMovedWhere(result[var], result[var+1])
 		print (num, dire)
