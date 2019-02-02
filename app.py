@@ -186,7 +186,7 @@ def solutionFinder(block_number, a, blocks,queue, allBoards, parent):
 def sendSolution():
     f = open("data", "r")
     content = f.read()
-    # print (content)
+    print (content)
     return content
 
 

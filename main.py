@@ -128,7 +128,7 @@ def callServer(block_number, array, block):
         'array': array,
         'block': block
     }
-    url = 'http://localhost:5000/api/v1/solutionFinder'
+    url = "https://unblockme872.herokuapp.com/api/v1/solutionFinder"
     response = requests.post(url, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
@@ -136,7 +136,7 @@ def callServer(block_number, array, block):
     return response.text
 
 def getStatus():
-    url = 'http://localhost:5000/api/v1/status'
+    url = 'https://unblockme872.herokuapp.com/api/v1/status'
     response = requests.get(url)
     response.raise_for_status()
     print(response.json())
@@ -183,9 +183,9 @@ if __name__ == '__main__':
 	callServer(block_number, a.tolist(), str(blocks))
 	result = getStatus()
 	while(result == "{'status':'false'}"):
+		print(result)
 		result = getStatus()
 		time.sleep(0.1)
-	print(result)
 	# for var in range(len(result)):
 	# 	print(np.asarray(result[var]))
 	# print(a)
